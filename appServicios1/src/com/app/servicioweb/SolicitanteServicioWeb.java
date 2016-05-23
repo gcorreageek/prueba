@@ -1,17 +1,48 @@
 package com.app.servicioweb;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+import com.app.dto.Solicitante;
 import com.app.servicios.SolicitanteServiceImpl;
 import com.app.servicios.SolicitanteServicio;
 
+@WebService
+//@SOAPBinding()
 public class SolicitanteServicioWeb {
 	
-	SolicitanteServicio solicitanteServicio = null;
-	private SolicitanteServicioWeb() {
-		solicitanteServicio = new SolicitanteServiceImpl(); 
+	private SolicitanteServicio solicitanteServicio = new SolicitanteServiceImpl(); 
+	public SolicitanteServicioWeb() {
 	}
 	
-	
-	
+	@WebMethod
+	public Solicitante registrarSolicitante(Solicitante solicitante){
+		try {
+			solicitante = solicitanteServicio.registrarSolicitante(solicitante);
+			return solicitante; 
+		} catch (IOException e) {
+			Logger.getLogger(getClass().getName()).log( Level.SEVERE, "Ocurrio un error",e);
+		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).log( Level.SEVERE, "Ocurrio un error",e);
+		}
+		return null;
+	}
+	@WebMethod
+	public List<Solicitante> listarSolicitante(){
+		try {
+			return solicitanteServicio.getSolicitantes();
+		} catch (IOException e) {
+			Logger.getLogger(getClass().getName()).log( Level.SEVERE, "Ocurrio un error",e);
+		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).log( Level.SEVERE, "Ocurrio un error",e);
+		}
+		return null;
+	}
 	
 	
 	
